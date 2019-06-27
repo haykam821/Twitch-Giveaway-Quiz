@@ -22,5 +22,11 @@
 	"bugs": {
 		"url": "https://github.com/haykam821/Twitch-Giveaway-Quiz/issues"
 	},
-	"homepage": "https://github.com/haykam821/Twitch-Giveaway-Quiz#readme"
+	"homepage": "https://github.com/haykam821/Twitch-Giveaway-Quiz#readme",
+	"dependencies": {
+		"@snooful/orangered-parser": "^4.0.0",
+		"debug": "^4.1.1",
+		"lodash.samplesize": "^4.2.0",
+		"tmi.js": "^1.4.5"
+	}
 }
