@@ -7,6 +7,8 @@ const parser = require("@snooful/orangered-parser");
 
 const timeout = process.env.GIVEAWAY_TIMEOUT || 90; // seconds
 
+const homepage = require("../package.json").homepage;
+
 let giveaway = null;
 
 function isGiveawayOpen() {
@@ -117,6 +119,12 @@ parser.register([{
 		]].forEach(section => {
 			return args.send(section.join("\n"));
 		});
+	},
+}, {
+	name: "info",
+	aliases: ["github", "repo", "repository", "homepage", "readme"],
+	handler: args => {
+		args.send("More info for this bot can be found at: " + homepage);
 	},
 }]);
 
