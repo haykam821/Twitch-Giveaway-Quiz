@@ -101,6 +101,23 @@ parser.register([{
 		log(giveaway);
 	},
 	name: "select",
+}, {
+	name: "help",
+	handler: args => {
+		return [[
+			"Broadcaster only:",
+			"--- !subgiveaway {comma-separated choices} | Starts a giveaway.",
+			"--- !winner {correct choice} | Announces 3 randomly-picked winners who selected the correct choice.",
+		], [
+			"For users:",
+			"--- !select {choice} | Selects a choice in a giveaway.",
+		], [
+			"Miscellaneous",
+			"--- !help | Shows this help message.",
+		]].forEach(section => {
+			return args.send(section.join("\n"));
+		});
+	},
 }]);
 
 const tmi = require("tmi.js");
@@ -114,9 +131,9 @@ const client = new tmi.client({
 	],
 });
 
-client.on("message", (target, context, msg, self) => {
+client.on("message", (target, context, msg) => {
 	if (!msg.startsWith("!")) return;
-	if (self) return;
+	if (context.username === process.env.BOT_USERNAME) return;
 
 	try {
 		parser.parse(msg.slice(1), {
