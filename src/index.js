@@ -5,6 +5,8 @@ const log = debug("twitch-giveaway-quiz");
 
 const parser = require("@snooful/orangered-parser");
 
+const timeout = process.env.GIVEAWAY_TIMEOUT || 90; // seconds
+
 let giveaway = null;
 
 function isGiveawayOpen() {
@@ -57,8 +59,8 @@ parser.register([{
 		const choices = args.choices.split(", ");
 
 		const timeoutID = setTimeout(() => {
-			args.send("The giveaway's selection period has ended after 10 seconds.");
-		}, 10000);
+			args.send(`The giveaway's selection period has ended after ${timeout} seconds.`);
+		}, timeout * 1000);
 
 		giveaway = {
 			timeoutID,
@@ -68,10 +70,10 @@ parser.register([{
 			}, {}),
 			hasSelected: [],
 			choices,
-			endsAt: Date.now() + 10000, // in 10 seconds
+			endsAt: Date.now() + (timeout * 1000),
 		};
 
-		args.send(`A giveaway has been created. It will end in 10 seconds. Use !select <choice> to select a choice from the following: ${choices.join(", ")}`);
+		args.send(`A giveaway has been created. It will end in ${timeout} seconds. Use !select <choice> to select a choice from the following: ${choices.join(", ")}`);
 
 		log(giveaway);
 	},
